@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- 
+=> html5 문서임을 표시, 실행과는 무관
+=> 문서 형의 선언으로 html 문서 최 상단에 지정 
+=> html 버전에 따라 다르며 html5의 경우 위처럼 간결해짐
+-->
+<html lang="ko">
+<!-- Html 문서의 시작/끝 : 최상위 태그 
+	 lang : 검색엔진에 사용언어를 알려주므로 검색 효율을 높여줄수있음 
+-->
+<head>
+<!-- 문서의 머리 , 출력되지 않음 -->
+<meta charset="UTF-8">
+<meta name="Programmer" content="홍길동">
+<!-- 다양한 메타정보 를 활용 , 검색엔진이 메타의 색인정보 활용
+	=> 홍보에 활용됨
+	=> 한글폰트 지정, keywords & description 지정, 문서이동 설정 
+	=> name 속성은 메타데이터 이름을 표시 --> 	
+<!--
+<meta http-equiv="refresh" content="2;url=http://www.naver.com" >
+	=> http-equiv 속성은 는 지시문
+	=> content 속성의 url 은 생략가능 -->
+	
+<title>** Hello **</title>
+<!-- 문서의 제목, 즐겨찾기에 적히는 제목 => 홍보수단 -->
+</head>
+<body text=yellow bgcolor="black">
+<!-- ** 배경 이미지 (경로지정방법) 
+	=> background="/Html01/image/a1.png"
+	=> 상대경로: 현재문서위치를 기준으로 "../image/aaa.gif"
+	=> 절대경로: 현재프로젝트기준 "/Html01/image/bbb.gif"
+-->
+<h1>안녕하세요 !!! ~~</h1>
+&nbsp;&nbsp;&nbsp;		강사 : 엄미현<br>
+&nbsp;&nbsp;&nbsp;희망 : 여러분 모두 원하는것을 이루도록 지도!!!<br>
+		      컴퓨터를 제일 잘하는 할머니가 되는것<br><br><br><br>
+<!-- 공백이나 줄바꿈은 반즈시 지정해야함. 
+ 	 => 공백 (빈칸) : 여러개 있어도 1개만 인정
+ 	 => 줄바꿈Tag <br> : 사용항 만큼 인정 -->
+		<pre>
+		** 우리 수업은
+		1) 시험 수시로 ....
+		2) 중간 중간 발표 ....
+		3) 밤에 공부하지 말고, 수업시간에 집중하기 !!!
+		4) 수강기간동안 여행 등, 장기결석 하지 않기
+		5) 3~5 명씩 스타디그룹을 만들어서 같이 공부하는것이 효율적입니다.	
+		</pre>
+		<!-- 여기는 주석 입니다 ~~ -->
+</body>
+</html>
