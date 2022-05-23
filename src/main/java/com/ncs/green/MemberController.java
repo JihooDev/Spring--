@@ -37,24 +37,27 @@ public class MemberController {
 	
 	// ajax 관리자 계정 (다른 계정을 마음대로 삭제 시킬수 있음)
 	@RequestMapping(value="/axmdelete")
-	public ModelAndView axmdelete(HttpServletRequest request,ModelAndView mv,MemberVO vo,RedirectAttributes rttr) {
+	public ModelAndView axmdelete(HttpServletRequest request,ModelAndView mv,MemberVO vo) {
 		HttpSession session = request.getSession(false);
 		if(session != null && ((String)session.getAttribute("LoginID")).equals("admin")) {
 			// 삭제 가능
 			// 2. Service
 			if(service.delete(vo) > 0) {
 				// 삭제 성공
-				rttr.addFlashAttribute("message","------ 회원 삭제 성공입니다 -----");
+				mv.addObject("code","200"); // 성공
 			} else {
 				// 삭제 실패 (DB오류)
-				rttr.addFlashAttribute("message","------ 회원 삭제 처리중 서버 문제 발생-----");
+				mv.addObject("code","201"); // 서버 오류
 			}
 		} else {
 			// 삭제 불가
-			rttr.addFlashAttribute("message","------ 회원 탈퇴를 처리 할 수 없습니다 : 관리자 모드가 아닙니다-----");
+			mv.addObject("code","202"); // LoginID 가 없음
 		}
 		
-//		mv.setViewName("redirect:home");
+		// 각 언어마다 인코딩 방식이 다르다.
+		
+		// 2. 결과 : view 처리 => Java객체 -> Json 
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	

@@ -32,4 +32,12 @@
          : 대부분의 Resolver로 끝나는 클래스의 경우에는 이미 정해져있기 때문에 변경불가능.
       => maxUploadSize 는 지정하지 않으면 default 값은 -1 이며 크기 무제한이 됨. 
          다양하게 변경하며 Test  -->
+         
+    <!-- ** jsonView 설정 -->
+   <beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView" /> 
+   <beans:bean id="viewResolver" 
+         class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <beans:property name="order" value="1" />
+   </beans:bean>
+    
 </beans:beans>
