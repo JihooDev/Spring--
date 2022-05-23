@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,6 +35,47 @@ public class MemberController {
 	MemberService service;
 	// => 조건 : 주입받으려는 구현 클래스가 반드시 생성되어있어야함.
 	//MemberService service = new MemberServiceImpl();
+	
+	// ** Image (file) Download
+	@RequestMapping(value="/dnload")
+	public ModelAndView dnload(HttpServletRequest request,ModelAndView mv,@RequestParam("dnfile") String dnfile) {
+		
+		// 1. File Download 
+		// => RealPath 확인 -> 해당 file 선택 -> responce 처리 (responce 의 Body 에 담아줌)
+		
+		
+		String realPath = request.getRealPath("/"); // deprecated Method\
+		String fileName = dnfile.substring(dnfile.lastIndexOf("/")+1); 
+		// dnfile => uploadImage\hello
+		
+		
+		// => 해당 file 찾기
+	    if(realPath.contains(".eclipse.")) {
+	    	 realPath = "D:/MTest/newMyWork/Spring01/src/main/webapp/resources/uploadImage/" + fileName;
+	     } else {
+	    	 realPath += "resources\\uploadImage\\" + fileName;
+	     }
+	      
+	      // ** 폴더 만들기 (File 클래스활용)
+	      // => 위의 저장경로에 폴더가 없는 경우 (uploadImage가 없는경우)  만들어 준다
+	      // => 매개변수에는 url 을 적어준다
+	    
+	    // => 해당하는 file을 객체화 시키기
+	      File file = new File(realPath);
+	      
+	      // mv에 file을 담는다
+	      mv.addObject("downloadFile", file);
+	      
+	      // => Java File 객체 -> File 정보를 responce에 전달하기
+	      mv.setViewName("downloadView");
+		return mv;
+	}
+	
+	   // ** 위 addOb.. , setView.., return..  3 구문은 아래처럼 작성도 가능.
+	   // => return new ModelAndView("downloadView", "downloadFile", file);
+	   // => 생성자 참고 
+	   //    public ModelAndView(View view, String modelName, Object modelObject) { 
+	   //           this.view = view; addObject(modelName, modelObject); }
 	
 	// ajax 관리자 계정 (다른 계정을 마음대로 삭제 시킬수 있음)
 	@RequestMapping(value="/axmdelete")
@@ -155,7 +197,7 @@ public class MemberController {
 	      System.out.println("** realPath => "+realPath);
 	      
 	      if(realPath.contains(".eclipse.")) {
-	    	  realPath = "D:\\MTest\\newMyWork\\Spring01\\src\\main\\webapp\\resources\\uploadImage\\";
+	    	  realPath = "D:\\MTest/newMyWork/Spring01/src/main/webapp/resources/uploadImage/";
 	      } else {
 	    	  realPath += "resources\\uploadImage\\";
 	      }
@@ -172,7 +214,7 @@ public class MemberController {
 	      }
 	      
 	      // 기본 Image를 하나 만들어 놓기
-	      String file1, file2 = "resources\\uploadImage\\basic.png";
+	      String file1, file2 = "resources/uploadImage/basic.png";
 	      
 	      // ** MultipartFile
 	      // => MultipartFile 타입의 uploadfilef 의 정보에서 
@@ -190,7 +232,7 @@ public class MemberController {
 	    	  uploadfilef.transferTo(new File(file1));
 	    	  //2) Table 저장 준비
 	    	  
-	    	  file2 = "resources\\uploadImage\\" + uploadfilef.getOriginalFilename();
+	    	  file2 = "resources/uploadImage/" + uploadfilef.getOriginalFilename();
 	      }
 	      
 	      vo.setUploadfile(file2);
@@ -263,7 +305,7 @@ public class MemberController {
 		
 		if (realPath.contains(".eclipse.")) {
 					// eclipse 개발환경:
-			realPath = "D:\\MTest\\newMyWork\\Spring01\\src\\main\\webapp\\resources\\uploadImage\\";
+			realPath = "D:\\MTest/newMyWork/Spring01/src/main/webapp/resources/uploadImage/";
 		} else {
 					// 톰캣서버에 배포 후 : 서버내에서의 위치
 			realPath += "resources\\uploadImage\\";
@@ -286,7 +328,7 @@ public class MemberController {
 			file1 = realPath + uploadfilef.getOriginalFilename(); // 경로완성
 			uploadfilef.transferTo(new File(file1)); // Image 저장
 			// 2) Table 저장 준비
-			file2="resources\\uploadImage\\"+uploadfilef.getOriginalFilename();
+			file2="resources/uploadImage/"+uploadfilef.getOriginalFilename();
 			vo.setUploadfile(file2);
 		}
 		

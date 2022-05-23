@@ -39,7 +39,6 @@ $(function(){
 	$('.ccc').click(function(){
 		//1) 요청 id 인식
 		var id = $(this).html();
-		alert("test")
 		
 		$.ajax({
 			type: 'Get',
@@ -57,6 +56,7 @@ $(function(){
 		})
 	});
 	
+	// 삭제 후 표시
 	$('.ddd').click(function(){
 		var id = $(this).attr('id');
 		
@@ -68,19 +68,21 @@ $(function(){
 				id:id
 			},
 			success: function(resultData){
-				
-				if(resultData.code === 200) {
-					alert('삭제가 정상적으로 처리 되었습니다', resultData);
-
-				} else if (resultData.code === 201) {
-					alert('서버오류')
+				if(resultData.code === '200') {
+					alert('삭제가 정상적으로 처리 되었습니다');
+					$('#'+id).html('Delete').css({
+						color:"red",
+						fontWeight : 'bold',
+					}).off();
+					
+				} else if (resultData.code === '201') {
+					alert('서버오류');
 				} else {
-					alert('관리자 로그인 정보 없음')
+					alert('관리자 로그인 정보 없음');
 				}
-				
 			},
 			error: function(){
-				alert('오류입니다')
+				alert('오류입니다');
 			}
 		})
 	})

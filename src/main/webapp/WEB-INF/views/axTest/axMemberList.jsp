@@ -34,6 +34,7 @@
 	<tr bgcolor="pink">
 		<th>I D</th><th>Password</th><th>Name</th><th>Level</th>
 		<th>Birthday</th><th>Point</th><th>Weight</th><th>추천인</th><th>Image</th>
+		
 		<c:if test="${LoginID == 'admin'}">
 		<th>Delete</th>
 		</c:if>
@@ -44,7 +45,7 @@
 				<span id="${member.id }" class="ccc textlink">${member.id }</span>
 			</td><td>${member.password}</td><td>${member.name}</td>
 				<td>${member.lev}</td><td>${member.birthd}</td><td>${member.point}</td>
-				<td>${member.weight}</td><td>${member.rid}</td><td><img src="${member.uploadfile}" width=50 height="60"></td>
+				<td>${member.weight}</td><td>${member.rid}</td><td><a href="dnload?dnfile=${member.uploadfile }"><img src="${member.uploadfile}" width=50 height="60"></a></td>
 				<c:if test="${LoginID == 'admin'}">
 				<td><span id="${member.id}" class="ddd textlink">삭제하기</span></td>	
 				</c:if>
