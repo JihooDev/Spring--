@@ -1,0 +1,22 @@
+// *** JSON 제이슨, (JavaScript Object Notation)
+// => 자바스크립트의 객체 표기법으로, 데이터를 전달 할 때 사용하는 표준형식.
+//    속성(key) 과 값(value) 이 하나의 쌍을 이룸
+      
+// ** JAVA의 Data 객체 -> JSON 변환하기
+// 1) GSON
+// : 자바 객체의 직렬화/역직렬화를 도와주는 라이브러리 (구글에서 만듦)
+// 즉, JAVA객체 -> JSON 또는 JSON -> JAVA객체
+      
+// 2) @ResponseBody (매핑 메서드에 적용)
+// : 메서드의 리턴값이 View 를 통해 출력되지 않고 HTTP Response Body 에 직접 쓰여지게 됨.
+// 이때 쓰여지기전, 리턴되는 데이터 타입에 따라 종류별 MessageConverter에서 변환이 이뤄진다.
+// MappingJacksonHttpMessageConverter 를 사용하면 request, response 를 JSON 으로 변환
+// view (~.jsp) 가 아닌 Data 자체를 전달하기위한 용도
+// @JsonIgnore : VO 에 적용하면 변환에서 제외
+
+// 3) jsonView
+// => Spring 에서 MappingJackson2JsonView를 사용해서
+// ModelAndView를 json 형식으로 반환해 준다.
+// => 방법
+// -> pom dependency추가 , 설정화일 xml 에 bean 등록
+// -> return할 ModelAndView 생성시 View를 "jsonView"로 설정
