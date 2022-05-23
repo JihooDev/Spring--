@@ -60,14 +60,24 @@ $(function(){
 	$('.ddd').click(function(){
 		var id = $(this).attr('id');
 		
+		// responce는 jsonView 로 처리
 		$.ajax({
 			type: 'Get',
 			url: 'axmdelete',
 			data : {
 				id:id
 			},
-			success: function(){
-				alert('삭제가 정상적으로 처리 되었습니다');
+			success: function(resultData){
+				
+				if(resultData.code === 200) {
+					alert('삭제가 정상적으로 처리 되었습니다', resultData);
+
+				} else if (resultData.code === 201) {
+					alert('서버오류')
+				} else {
+					alert('관리자 로그인 정보 없음')
+				}
+				
 			},
 			error: function(){
 				alert('오류입니다')
