@@ -119,6 +119,8 @@ $(function(){
 	// 1) Form 의 serialize() 		
 	//	var formData = $('#myform').serialize();
 	
+	// => id === name 이 같아야 하고 vo의 column 명이 동일해야함
+	
 	// 2) 객체화
 	/*	var formData = {
 			id:$('#id').val(),
@@ -128,7 +130,7 @@ $(function(){
 			birthd:$('#birthd').val(),
 			point:$('#point').val(),
 			weight:$('#weight').val(),
-			rid:$('#rid').val()
+			rid:$('#rid').val() 
 		}; */
 		
 	// 3) FormData 객체 : file 업로드가 가능
@@ -173,13 +175,15 @@ $(function(){
 			success:function(resultPage){
 				$('#resultArea1').html(resultPage);
 			},
-			error:function(){
-				$('#resultArea1').html('~~ Ajax_Join form 요청 Error ~~');
-			}
+			error: errorCode('Join 처리')
 		}); //ajax
 	}); //axjoin_click
-	
 }); //ready
+
+function errorCode(test) {
+	$('#resultArea1').html('~~ Ajax 요청 Error ~~ => ' + test);
+}
+
 
 /*
 ** $.ajax 메서드   ******************

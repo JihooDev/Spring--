@@ -32,11 +32,55 @@ $(function(){
 			},
 		})
 	})
+	
+	// ** 반복문에 이벤트 적용하기2 - JQuery
+	// => id별로 board조회
+	
+	$('.ccc').click(function(){
+		//1) 요청 id 인식
+		var id = $(this).html();
+		alert("test")
+		
+		$.ajax({
+			type: 'Get',
+			url: 'aidblist',
+			data: {
+				id : id
+			},
+			success: function(result){
+				$('#resultArea2').html(result);
+			},
+			error: function(){
+				$('#resultArea2').html('');
+				alert('오류 입니다')
+			}
+		})
+	});
+	
+	$('.ddd').click(function(){
+		var id = $(this).attr('id');
+		
+		$.ajax({
+			type: 'Get',
+			url: 'axmdelete',
+			data : {
+				id:id
+			},
+			success: function(){
+				alert('삭제가 정상적으로 처리 되었습니다');
+			},
+			error: function(){
+				alert('오류입니다')
+			}
+		})
+	})
 });
-// ** 반복문에 이벤트 적용하기 
+// ** 반복문에 이벤트 적용하기
 // => id별로 board조회
 // test 1) JS function
 
+
+	
 	function aidBList(id){
 		$.ajax({
 			type: 'Get',
@@ -46,7 +90,6 @@ $(function(){
 			},
 			success: function(result){
 				$('#resultArea2').html(result);
-				$('#resultArea1').html('');
 			},
 			error: function(){
 				$('#resultArea2').html('');
@@ -54,4 +97,3 @@ $(function(){
 			}
 		})
 	}
-

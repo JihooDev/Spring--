@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <script src="resources/myLib/jquery-3.2.1.min.js"></script>
 <script src="resources/myLib/axTest02.js"></script>
+<style>
+	* {
+	scroll-behavior: smooth;}
+</style>
 <title>** Member List **</title>
 </head>
 <body>
@@ -18,7 +22,7 @@
       -> href="" 의 값에 따라 scroll 위치 변경 가능.
         <a href="" onclick="aidBList('banana')" >....
       -> href="#"      .... scroll 위치 변경
-          "#" 에 #id 를 주면 id의 위치로 포커스를 맞추어 이동,
+          "#" 에 #id 를 주면 id의 위치로 포커스를 맞추어 이동, 	
            #만 주면 포커스가 top 으로 올라감
       -> href="javascript:;" ...... scroll 위치 변경 없음
 
@@ -29,13 +33,21 @@
 <table width=100%>
 	<tr bgcolor="pink">
 		<th>I D</th><th>Password</th><th>Name</th><th>Level</th>
-		<th>Birthday</th><th>Point</th><th>Weight</th>
+		<th>Birthday</th><th>Point</th><th>Weight</th><th>추천인</th><th>Image</th>
+		<c:if test="${LoginID == 'admin'}">
+		<th>Delete</th>
+		</c:if>
 	</tr>
 	<c:if test="${not empty banana}">
 		<c:forEach var="member" items="${banana}" >
-			<tr><td><a href="#resultArea2" onclick="aidBList('${member.id}')">${member.id}</a></td><td>${member.password}</td><td>${member.name}</td>
+			<tr><td><%-- <a href="#resultArea2" onclick="aidBList('${member.id}')">${member.id}</a> --%>
+				<span id="${member.id }" class="ccc textlink">${member.id }</span>
+			</td><td>${member.password}</td><td>${member.name}</td>
 				<td>${member.lev}</td><td>${member.birthd}</td><td>${member.point}</td>
-				<td>${member.weight}</td><td>${member.rid}</td><td><img src="${member.uploadfile}" width=50 height="60"></td>	
+				<td>${member.weight}</td><td>${member.rid}</td><td><img src="${member.uploadfile}" width=50 height="60"></td>
+				<c:if test="${LoginID == 'admin'}">
+				<td><span id="${member.id}" class="ddd textlink">삭제하기</span></td>	
+				</c:if>
 			</tr>
 		</c:forEach>
 	</c:if>
