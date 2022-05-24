@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="resources/myLib/jquery-3.2.1.min.js"></script>
+<script src="resources/myLib/axTest01.js"></script>
 <script src="resources/myLib/axTest02.js"></script>
 <style>
 	* {
@@ -41,13 +42,13 @@
 	</tr>
 	<c:if test="${not empty banana}">
 		<c:forEach var="member" items="${banana}" >
-			<tr><td><%-- <a href="#resultArea2" onclick="aidBList('${member.id}')">${member.id}</a> --%>
+			<tr><td><a href="#resultArea2" onclick="aidBList('${member.id}')">${member.id}</a>
 				<span id="${member.id }" class="ccc textlink">${member.id }</span>
 			</td><td>${member.password}</td><td>${member.name}</td>
 				<td>${member.lev}</td><td>${member.birthd}</td><td>${member.point}</td>
 				<td>${member.weight}</td><td>${member.rid}</td><td><a href="dnload?dnfile=${member.uploadfile }"><img src="${member.uploadfile}" width=50 height="60"></a></td>
 				<c:if test="${LoginID == 'admin'}">
-				<td><span id="${member.id}" class="ddd textlink">삭제하기</span></td>	
+				<td><span id="${member.id}" class="ddd1 textlink" onclick="amDelete('${member.id}')">삭제하기</span></td>	
 				</c:if>
 			</tr>
 		</c:forEach>
@@ -57,5 +58,6 @@
 	</c:if>
 </table>
 <a href="home">홈으로</a>
+
 </body>
 </html>

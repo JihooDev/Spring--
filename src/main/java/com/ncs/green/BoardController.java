@@ -27,6 +27,16 @@ public class BoardController {
 	BoardService service;
 	//BoardService service = new BoardServiceImpl();
 	
+	// Json view 
+	@RequestMapping(value = "/jsbdetail", method = RequestMethod.GET)
+	public ModelAndView jsbdetail(ModelAndView mv, BoardVO vo, HttpServletResponse response) {
+		response.setContentType("text/html; charset=UTF-8");
+		vo = service.selectOne(vo);
+		mv.addObject("content",vo.getContent());
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
 	@RequestMapping(value = "/aidblist", method = RequestMethod.GET)
 	public ModelAndView aidblist(ModelAndView mv, BoardVO vo) {
 		mv.addObject("banana",service.aidBList(vo));

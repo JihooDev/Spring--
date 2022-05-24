@@ -7,7 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>** Spring MVC2 LoginForm **</title>
+<script src="resources/myLib/jquery-3.2.1.min.js"></script>
 <script src="resources/myLib/axTest01.js"></script>
+<script src="resources/myLib/axCode.js"></script>
 <style>
 	.errMessage {
 		color: red;

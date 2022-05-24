@@ -57,7 +57,7 @@ $(function(){
 	});
 	
 	// 삭제 후 표시
-	$('.ddd').click(function(){
+/*	$('.ddd').click(function(){
 		var id = $(this).attr('id');
 		
 		// responce는 jsonView 로 처리
@@ -85,7 +85,7 @@ $(function(){
 				alert('오류입니다');
 			}
 		})
-	})
+	})*/
 });
 // ** 반복문에 이벤트 적용하기
 // => id별로 board조회
@@ -106,6 +106,33 @@ $(function(){
 			error: function(){
 				$('#resultArea2').html('');
 				alert('오류 입니다')
+			}
+		})
+	}
+	
+	function amDelete(id) {
+		$.ajax({
+			type: 'Get',
+			url: 'axmdelete',
+			data : {
+				id:id
+			},
+			success: function(resultData){
+				if(resultData.code == '200') {
+					alert('삭제가 정상적으로 처리 되었습니다');
+					$('#'+id).html('Delete').css({
+						color:"red",
+						fontWeight : 'bold',
+					}).attr('onclick', null)
+					
+				} else if (resultData.code == '201') {
+					alert('서버오류');
+				} else {
+					alert('관리자 로그인 정보 없음');
+				}
+			},
+			error: function(){
+				alert('오류입니다');
 			}
 		})
 	}

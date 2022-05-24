@@ -7,12 +7,31 @@
 <meta charset="UTF-8">
 <title>** Spring MVC2 BoardList **</title>
 <style>
+	* {
+	scroll-behavior: smooth;
+	}
 	span {
 		cursor : pointer;
 	}
 </style>
+<script src="resources/myLib/jquery-3.2.1.min.js"></script>
+<script src="resources/myLib/axTest01.js"></script>
+<script src="resources/myLib/axTest03.js"></script>
 </head>
 <body>
+<!-- ** 반복문에 이벤트 적용 
+   => 매개변수처리에 varStatus 활용, ajax, json Test  
+   => Login 여부에 무관하게 처리함.
+// Test 1. 타이틀 클릭하면, 하단(resultArea2)에 글 내용 출력하기  -> aTag, JS, jsBDetail1(  ) 
+// Test 2. 타이틀 클릭하면, 글목록의 아랫쪽(span result)에 글 내용 출력하기 -> aTag, JS, jsBDetail2( , ) 
+// Test 3. seq 에 마우스 오버시에 별도의 DIV에 글내용 표시 되도록 하기 
+//         -> jQuery : id, class, this
+//          -> seq 의 <td> 에 마우스오버 이벤트
+//         -> content 를 표시할 div (table 바깥쪽에) : 표시/사라짐  
+//         -> 마우스 포인터의 위치를 이용해서 div의 표시위치 지정
+-->
+
+
    <!-- ** File DownLoad 추가 
    ** 기본과정 ****************
    1) 요청시 컨트롤러에게 파일패스(path) 와 이름을 제공  (axMemberList.jsp)
@@ -45,13 +64,18 @@
 		<th>RegDate</th>
 		<th>조회수</th>
 	<tr>
-	<c:forEach var="board" items="${banana}">
+	<c:forEach var="board" items="${banana}" varStatus="vs">
 		<tr height="30">	
 			<td>${board.seq}</td>
-			<td><a href="bdetail?seq=${board.seq }">${board.title}</a></td>
+			<!-- Test 1. 타이틀 클릭하면, 하단(resultArea2)에 글 내용 출력하기  -> aTag, JS, jsBDetail1(  )  -->
+			<td><a href="javascript:;" onclick="jsBDetail2(${board.seq},${vs.count})">${board.title}</a></td>
 			<td>${board.id}</td>
 			<td>${board.regdate}</td>
 			<td>${board.cnt}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan="4"><span id="${vs.count}" class="content" style="background : Lavender"></span></td>
 		</tr>
 	</c:forEach>
 </table>
