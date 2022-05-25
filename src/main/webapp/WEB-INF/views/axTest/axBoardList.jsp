@@ -13,9 +13,31 @@
 	span {
 		cursor : pointer;
 	}
+	
+	.content {
+		color:grey;
+		background : Lavender;
+	}
+	
+	#row {
+		position: relative;
+	}
+	
+	#contentBox{
+		position : absolute;
+		z-index : 999;
+		width: 300px;
+		height: 70px;
+		background-color: yellow;
+	}
+	
+	.textlink {
+		color: blue;
+	}
 </style>
 <script src="resources/myLib/jquery-3.2.1.min.js"></script>
 <script src="resources/myLib/axTest01.js"></script>
+<script src="resources/myLib/axTest02.js"></script>
 <script src="resources/myLib/axTest03.js"></script>
 </head>
 <body>
@@ -65,8 +87,8 @@
 		<th>조회수</th>
 	<tr>
 	<c:forEach var="board" items="${banana}" varStatus="vs">
-		<tr height="30">	
-			<td>${board.seq}</td>
+		<tr height="30" id="row">	
+			<td id="${board.seq}" class="sss2 textlink" align="center">${board.seq}</td>
 			<!-- Test 1. 타이틀 클릭하면, 하단(resultArea2)에 글 내용 출력하기  -> aTag, JS, jsBDetail1(  )  -->
 			<td><a href="javascript:;" onclick="jsBDetail2(${board.seq},${vs.count})">${board.title}</a></td>
 			<td>${board.id}</td>
@@ -75,10 +97,14 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td colspan="4"><span id="${vs.count}" class="content" style="background : Lavender"></span></td>
+			<td colspan="4"><span id="${vs.count}" class="content"></span></td>
 		</tr>
 	</c:forEach>
 </table>
+<hr>
+<div id="contentBox">
+
+</div>
 <c:if test="${not empty LoginID }">
 &nbsp;&nbsp;<a href="binsertf">새글작성</a>
 </c:if>
