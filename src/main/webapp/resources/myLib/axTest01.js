@@ -178,6 +178,33 @@ $(function(){
 			error: errorCode('Join 처리')
 		}); //ajax
 	}); //axjoin_click
+	
+	// JSON LOGIN
+	// ** 별도의 controller 필요 : jsonView 
+	$('#jslogin').click(function(){
+		$.ajax({
+			type:'Get',
+			url:'jslogin',
+			data:{
+				id:$('#id').val(),
+				password:$('#password').val()
+			},
+			success:function(result){
+				// => resultArea 는 clear, home: 새로고침
+				if(result.code == 200) {
+					$('#resultArea').html('');				
+					location.reload();
+				} else {
+					$('#message').html(result.message);
+					$("#id").focus();
+				}
+			},
+			error:function(){
+				alert("jslogin error 처리")
+			}
+		}); //ajax
+	}); //jslogin_click
+	
 }); //ready
 
 function errorCode(test) {

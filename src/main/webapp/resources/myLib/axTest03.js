@@ -41,8 +41,7 @@ $(function(){
 		var mleft = e.pageX;
 		var mtop = e.pageY;
 		
-		console.log("e.pageX,Y => ",mleft,mtop);
-		console.log("e.clientX,Y => ",e.clientX,e.clientY);
+		console.log(e.pageX,e.pageY)
 		
 		var seq = $(this).html();
 		
@@ -60,8 +59,10 @@ $(function(){
 				alert('서버 오류 입니다');
 			}
 		})
+		return false;
 	},function(){
 		$('#contentBox').hide();
+		return false;
 	})
 })
 
@@ -79,7 +80,9 @@ function jsBDetail1(seq) {
 }
 
 // => toggle 방식
-function jsBDetail2(seq,count) {
+// => event객체 전달 test
+function jsBDetail2(e,seq,count) {
+	
 	
 	if($('#'+count).html() == ''){
 		// 글이 없을 때만 Ajax 로 가져오기

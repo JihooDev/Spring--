@@ -48,10 +48,13 @@
 	<input type="submit" value=로그인 onclick="return inCheck()">&nbsp;&nbsp;
 	<input type="reset" value="취소">
 	<span id="axlogin" class="text_link">Ajax Login</span>
+	<span id="jslogin" class="text_link">JSON Login</span>
 	</td>
 </tr>	
 </table>
 </form>
+<br>
+<span id="message"></span>
 <hr>
 <c:if test="${empty LoginID}">
 	${message}

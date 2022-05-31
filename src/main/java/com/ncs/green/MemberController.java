@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,36 @@ public class MemberController {
 	MemberService service;
 	// => 조건 : 주입받으려는 구현 클래스가 반드시 생성되어있어야함.
 	//MemberService service = new MemberServiceImpl();
+	
+	@RequestMapping(value = "/jslogin", method = RequestMethod.GET)
+	public ModelAndView jslogin(HttpServletRequest request,ModelAndView mv, MemberVO vo,HttpServletResponse response) {
+		// 1. 입력한 password 를 보관
+		String password = vo.getPassword();
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		vo = service.selectOne(vo);
+		request.setAttribute("notLogin", "로그인 후 이용하세요~");
+		if(vo != null) {
+			if(vo.getPassword().equals(password)) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("LoginID", vo.getId());
+				mv.addObject("code","200");
+				
+			} else {
+				mv.addObject("code","201");
+				mv.addObject("message","비밀번호 오류입니다");
+			}
+		} else {
+			mv.addObject("code", "201");
+			mv.addObject("message","아이디 오류입니다");
+		}
+		
+		System.out.println("--------- Login ----------");
+		mv.setViewName("jsonView");
+		return mv;
+	}	
+	
 	
 	// ** Image (file) Download
 	@RequestMapping(value="/dnload")
@@ -238,9 +269,11 @@ public class MemberController {
 	      
 	      vo.setUploadfile(file2);
 	      
+	      int cnt = service.insert(vo);
+	      service.insert(vo);
 	      
 		// 2. Service
-		if ( service.insert(vo) > 0) {
+		if ( cnt > 0) {
 			// 입력 성공 -> loginForm 으로
 			mv.addObject("message", "----- 회원가입 완료 -----");
 			mv.setViewName("member/loginForm");
@@ -332,6 +365,7 @@ public class MemberController {
 			file2="resources/uploadImage/"+uploadfilef.getOriginalFilename();
 			vo.setUploadfile(file2);
 		}
+		
 		
 		mv.addObject("apple",vo);
 		if ( service.update(vo) > 0) {

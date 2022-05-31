@@ -90,7 +90,7 @@
 		<tr height="30" id="row">	
 			<td id="${board.seq}" class="sss2 textlink" align="center">${board.seq}</td>
 			<!-- Test 1. 타이틀 클릭하면, 하단(resultArea2)에 글 내용 출력하기  -> aTag, JS, jsBDetail1(  )  -->
-			<td><a href="javascript:;" onclick="jsBDetail2(${board.seq},${vs.count})">${board.title}</a></td>
+			<td><a href="javascript:;" onclick="jsBDetail2(event,${board.seq},${vs.count})">${board.title}</a></td>
 			<td>${board.id}</td>
 			<td>${board.regdate}</td>
 			<td>${board.cnt}</td>

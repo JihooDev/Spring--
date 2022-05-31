@@ -81,6 +81,7 @@ $(function(){
 				alert('오류 입니다')
 			}
 		})
+		return false;
 	});
 	
 	// 삭제 후 표시
