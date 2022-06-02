@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import mapperInterface.BoardMapper;
 import util_DB.BoardDAO;
 import vo.BoardVO;
+import vo.PageVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -18,6 +19,25 @@ public class BoardServiceImpl implements BoardService {
 	// => Mybatis 로 교체 (interface 방식)
 	// => interface BoardMapper 를 통해서
 	//    BoardMapper.xml 의 SQL 구문 접근
+	
+	@Override
+	public PageVO<BoardVO> pageList(PageVO<BoardVO> pvo) {	
+		pvo.setTotalRowCount(mapper.totalRowsCount(pvo));
+		pvo.setList(mapper.pageList(pvo)); 
+		return pvo;
+	}
+	
+	@Override
+	public int stepUpdate(BoardVO vo) {	
+		return mapper.stepUpdate(vo);
+	}
+	
+	
+	@Override
+	public int rinsert(BoardVO vo) {
+		System.out.println(mapper.stepUpdate(vo)); 
+		return mapper.rinsert(vo);
+	}
 	
 	@Override
 	public List<BoardVO> aidBList(BoardVO vo) {

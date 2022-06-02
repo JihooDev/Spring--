@@ -29,4 +29,7 @@ public class BoardVO {
 	private String content;
 	private String regdate;
 	private int cnt;
+	private int root;
+	private int step;
+	private int indent;
 } // class

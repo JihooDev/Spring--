@@ -39,8 +39,10 @@
 		&nbsp;&nbsp;<a href="joinf">Join</a>
 	</c:if>
 	<hr>
-	&nbsp;&nbsp;<a href="mlist">MemberList</a>
-	&nbsp;&nbsp;<a href="blist">리스트</a>
+	&nbsp;&nbsp;<a href="mlist">MList</a>
+	&nbsp;&nbsp;<a href="mpagelist">MPList</a>
+	&nbsp;&nbsp;<a href="blist">BList</a>
+	&nbsp;&nbsp;<a href="bpagelist">BPList</a>
 	&nbsp;&nbsp;<a href="axtest">AxTest</a>
 	<hr>
 	<c:if test="${not empty message}">

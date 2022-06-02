@@ -270,7 +270,7 @@ public class MemberController {
 	      vo.setUploadfile(file2);
 	      
 	      int cnt = service.insert(vo);
-	      service.insert(vo);
+//	      service.insert(vo);
 	      
 		// 2. Service
 		if ( cnt > 0) {

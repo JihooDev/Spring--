@@ -119,4 +119,28 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
     
+    <!-- Exception 설정 -->
+    <beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" id="exceptionResolver">
+    	<beans:property name="exceptionMappings">
+    		<beans:props>
+    			<beans:prop key="org.springframework.dao.DuplicateKeyException">
+    				errorPage/dupExceptionMessage
+    			</beans:prop>
+    		  	<beans:prop key="org.springframework.jdbc.UncategorizedSQLException">
+                        errorPage/sqlexceptionMessage
+                </beans:prop>
+            	<beans:prop key="java.lang.IllegalArgumentException">
+                        errorPage/ilexceptionMessage
+                </beans:prop>   
+           		<beans:prop key="java.lang.ArithmeticException">
+                        errorPage/arexceptionMessage
+                </beans:prop>
+            	<beans:prop key="java.lang.NullPointerException">
+                        errorPage/npException
+                </beans:prop>
+          	</beans:props>
+    	</beans:property>
+    	
+    </beans:bean>
+    
 </beans:beans>

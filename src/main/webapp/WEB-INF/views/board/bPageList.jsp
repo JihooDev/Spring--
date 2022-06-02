@@ -8,7 +8,7 @@
 <title>** Spring MVC2 BoardList **</title>
 </head>
 <body>
-<h2>** Spring MVC2 BoardList **</h2>
+<h2>** Spring MVC2 Board PageList **</h2>
 <c:if test="${not empty message}">
 	<h3>${message}</h3>
 </c:if>
@@ -42,6 +42,19 @@
 		</tr>
 	</c:forEach>
 </table>
+<br><hr>
+<div align="center">
+	<!-- Paging 1. : 모든페이지 출력, 현재Page 강조 / 나머지 페이지는 링크 -->
+	<c:forEach var="i" begin="1" end="${totalPageNo}">
+		<c:if test="${i==currPage}">
+			<font size="5" color="orange">${i}</font>&nbsp;
+		</c:if>
+		<c:if test="${i != currPage}">
+			<a href="bpagelist?currPage=${i}">${i}</a>&nbsp;
+		</c:if>
+	</c:forEach>
+	
+</div>
 <c:if test="${not empty LoginID }">
 &nbsp;&nbsp;<a href="binsertf">새글작성</a>
 </c:if>
