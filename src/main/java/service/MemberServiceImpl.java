@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import criTest.Criteria;
 import mapperInterface.MemberMapper;
-import util_DB.MemberDAO;
 import vo.MemberVO;
+import vo.PageVO;
 
 // ** Service
 // => 요청클래스 와 DAO클래스 사이의 연결(완충지대) 역할
@@ -18,11 +19,9 @@ import vo.MemberVO;
 //=> Alt + Shift + T  
 //=> 또는 마우스우클릭 PopUp Menu 의  Refactor - Extract Interface...
 
-
 @Service
 public class MemberServiceImpl implements MemberService {
-
-//	** Mybatis 적용
+	
 	@Autowired
 	MemberMapper mapper;
 	// ** Mybatis interface 방식 적용
@@ -30,8 +29,32 @@ public class MemberServiceImpl implements MemberService {
 	//    단, 설정화일에 <mybatis-spring:scan base-package="mapperInterface"/> 반드시 추가해야함
 	//    MemberDAO => mapperInterface 사용으로 MemberMapper 가 역할 대신함
 	
-//	** Mybatis 적용 전
-//	MemberDAO dao;
+	//MemberDAO dao;  -> Mybatis 적용전
+	//MemberDAO dao = new MemberDAO(); 
+	
+	@Override
+	public List<MemberVO> checkList(MemberVO vo) {
+		return mapper.checkList(vo);
+	}
+	// PageList 2. Criteria ~~~~~~~~~~~~~~~~~~~~~~
+	@Override
+	public List<MemberVO> criList(Criteria cri) {
+		System.out.println(cri);
+		return mapper.criList(cri);
+	}
+	@Override
+	public int totalCriCount(Criteria cri) {
+		System.out.println(cri);
+		return mapper.totalCriCount(cri);
+	}
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	@Override // PageList 1.
+	public PageVO<MemberVO> pageList(PageVO<MemberVO> pvo) {
+		pvo.setTotalRowCount(mapper.totalRowsCount(pvo));
+		pvo.setList(mapper.pageList(pvo));
+		return pvo;
+	}
 	
 	@Override
 	public List<MemberVO> selectList() {

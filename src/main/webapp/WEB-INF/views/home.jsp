@@ -41,10 +41,16 @@
 	<hr>
 	&nbsp;&nbsp;<a href="mlist">MList</a>
 	&nbsp;&nbsp;<a href="mpagelist">MPList</a>
+	&nbsp;&nbsp;<a href="mcrilist">MCriList</a>
+	&nbsp;&nbsp;<a href="mchecklist">MCheck</a><br>
 	&nbsp;&nbsp;<a href="blist">BList</a>
 	&nbsp;&nbsp;<a href="bpagelist">BPList</a>
+	&nbsp;&nbsp;<a href="bcrilist">BCriList</a>
+	&nbsp;&nbsp;<a href="bchecklist">BCheck</a>
+	&nbsp;&nbsp;<a href="bjoinlist">BJoin</a><br>
 	&nbsp;&nbsp;<a href="axtest">AxTest</a>
 	<hr>
+	
 	<c:if test="${not empty message}">
 		<b>${message}</b>
 	</c:if>

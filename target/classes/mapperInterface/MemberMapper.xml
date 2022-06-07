@@ -1,32 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
- <mapper namespace="mapperInterface.MemberMapper"> <!-- 자바의 인터페이스의 패키지와 파일명 -->
- <!--  
-** interface 를 통해 ~Mapper 접근
-=> interface ~Mapper.java 의 패키지명과 화일명과  
-   ~Mapper.xml 의 패키지명, 화일명, namespace 값은 같아야됨. -->
- 	
- 	<select id="selectList" resultType="vo.MemberVO"> <!-- id : 메서드명 | resultType : vo.MemberVO -->
-		select id, password, name, 
+
+<mapper namespace="mapperInterface.MemberMapper" >
+
+<!-- ** Member Mapper 반복문 처리 (CheckBox 이용)  
+=> select * from member where lev='A' OR lev='B' OR lev='C' order by id asc (비추)  
+   select * from member where lev in ('A','B','C') order by id asc (추천)
+-->
+
+<!-- ** Member Mapper 반복문 처리 (CheckBox 이용)  
+=> select * from member where lev='A' OR lev='B' OR lev='C' order by id asc (비추)  
+   select * from member where lev in ('A','B','C') order by id asc (추천)
+
+=> Java for 구문 : for ( String city:arrCity ) { ..... }   
+   
+=> Mapper 에 반복문 적용하기 :<foreach.....
+ 
+   <foreach ...index="index"..>   
+              ...... "${index}" : index 값 사용하기 
+                      사용하지 않는경우 아래처럼 표시해도 되고, 생략해도됨.
+   <foreach .... index="" open="(" close=")" separator=",">   
+     
+    - collection : list 또는 array Type 의 매개변수 (vo에 정의된 변수 사용)   
+   - item : collection 의  데이터 를 1건씩 전달 받으며 위의 구문을 완성함.    
+   - index : 필요시 사용,  0 부터 시작 (0,1,2...) 
+--> 
+<select id="checkList" resultType="vo.MemberVO">
+	 select * from member where lev in
+	 <foreach collection="check" item="it" open="(" close=")" separator=",">
+	 	#{it}
+	 </foreach>
+	 order by id asc
+</select>
+
+<!-- PageList 2_ver02. SearchCriteria ************ -->
+<sql id="search">
+	<if test="keyword != null">
+		<bind name="keyVal" value="'%'+keyword+'%'"/>
+	</if>
+	<choose>
+		<when test="searchType=='i'.toString()">
+			and id LIKE #{keyVal})
+		</when>
+		<when test="searchType=='a'.toString()">
+ 			and name Like #{keyVal})
+  		</when>
+	  	<when test="searchType=='l'.toString()">
+	  		and lev Like #{keyVal})
+	  	</when>
+	  	<when test="searchType=='r'.toString()">
+	  		and rid Like #{keyVal})
+	  	</when>
+	  	<when test="searchType=='b'.toString()">
+	  		and birthd Like #{keyVal})
+	  	</when>
+	  	<when test="searchType=='ia'.toString()">
+	  		and id Like #{keyVal}
+	  		or name Like #{keyVal})
+	  	</when>
+	  	<otherwise>)</otherwise>
+	</choose>
+</sql>
+
+<select id="totalCriCount" resultType="int">
+	select count(*) from member
+	where (id != 'admin' <include refid="search"></include>
+</select>
+
+<select id="criList" resultType="vo.MemberVO">
+		select * from member
+		where (id != 'admin' <include refid="search"></include>
+		order by id asc
+		limit #{sno}, #{rowsPerPage}
+</select>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<!-- PageList 1. ****************** -->
+<select id="totalRowsCount" resultType="int">
+	select count(*) from member
+</select>
+<!-- 요청 Page에서 출력할 Row 만 select => MySql 의 Limit 은 0 부터 적용 -->
+<select id="pageList" resultType="vo.MemberVO">
+	select * from member order by id asc limit #{sno}, #{rowsPerPage}
+</select>
+<!-- ********************************** -->
+
+<!-- <select id="selectList" resultType="vo.MemberVO">
+	select id, password, name, 
+	CONCAT(lev, IF(lev='A', ' 관리자', IF(lev='B', ' 나무', IF(lev='C', ' 잎새', ' 새싹')))) lev, 
+	birthd, point, weight from member order by id 
+</select> 
+
+** CONCAT(a,b,c)  매개변수 2 이상 Test 
+=> MySql 커맨드 , Mybatis 모두 허용됨
+-->
+<select id="selectList" resultType="vo.MemberVO">
+	select id, password, name, 
 	CONCAT(if(lev='A', '관리자', IF(lev='B', '나무', IF(lev='C', '잎새', '새싹'))),' ',lev) lev, 
-	birthd, point, weight, rid, uploadfile from member order by id
- 	</select>
- 	 <select id="selectOne" resultType="vo.MemberVO" > <!-- id : 메서드명 | resultType : vo.MemberVO -->
- 		select id, password, name,
-		CONCAT(lev, IF(lev='A', ' 관리자', IF(lev='B', ' 나무', IF(lev='C', ' 잎새', ' 새싹')))) lev,
-		birthd, point, weight,rid,uploadfile from member where id=#{id}
- 	</select>
- 	<!-- #{id} : parameter 로 전달된 vo 의 id 라는 컬럼의 value 가 전달됨 (getId 를 찾음)-->
- 	<insert id="insert"> <!-- id : 메서드명 | resultType : vo.MemberVO -->
- 		insert into member values(#{id},#{password},#{name},#{lev},#{birthd},#{point},#{weight},#{rid},#{uploadfile})
- 	</insert>
- 	<update id="update"> <!-- id : 메서드명 | resultType : vo.MemberVO -->
- 		update member set password=#{password},name=#{name}, lev=#{lev}, birthd=#{birthd} , point=#{point},weight=#{weight},rid=#{rid},uploadfile=#{uploadfile} where id=#{id}
- 	</update>
-  	<delete id="delete"> <!-- id : 메서드명 | resultType : vo.MemberVO -->
- 		delete from member where id=#{id}
- 	</delete>
- 	 	
- </mapper>
+	birthd, point, weight, rid, uploadfile from member order by id 
+</select>
+
+<select id="selectOne" resultType="vo.MemberVO" >
+	select id, password, name,
+	CONCAT(lev, IF(lev='A', ' 관리자', IF(lev='B', ' 나무', IF(lev='C', ' 잎새', ' 새싹')))) lev, 
+	birthd, point, weight, rid, uploadfile from member where id=#{id}
+</select>
+<!-- #{id} : parameter 로 전달된 vo 의 id 라는 컬럼의 value 가 전달됨  
+			 -> getId() 로 처리함	-->
+
+<insert id="insert">
+	insert into member values( #{id},#{password},#{name},
+	#{lev},#{birthd},#{point},#{weight},#{rid},#{uploadfile} )
+</insert>
+
+<update id="update">
+	update member set password=#{password},name=#{name},lev=#{lev},birthd=#{birthd},
+	point=#{point},weight=#{weight},rid=#{rid},uploadfile=#{uploadfile} where id=#{id}
+</update>
+
+<delete id="delete">
+	delete from member where id=#{id}
+</delete>
+
+</mapper>  

@@ -22,7 +22,8 @@ import lombok.Data;
 @Data
 //=> 정의된 모든 필드에 대한 
 //Getter, Setter, ToString 과 같은 모든 요소를 한번에 만들어주는 애너테이션.
-public class BoardVO {
+public class BoardVO extends MemberVO{
+	private String[] check;
 	private int seq;
 	private String title;
 	private String id;

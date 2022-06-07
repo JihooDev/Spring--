@@ -13,3 +13,9 @@ a:hover {
 	color:blue;
 	text-decoration: none;
 }
+
+/*  Check  List searchBar */
+#searchBar {
+   color:DimGray ; font-family:돋움; font-size:16px;
+   float: left;
+}

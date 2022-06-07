@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import criTest.Criteria;
 import mapperInterface.BoardMapper;
 import util_DB.BoardDAO;
 import vo.BoardVO;
@@ -19,6 +20,26 @@ public class BoardServiceImpl implements BoardService {
 	// => Mybatis 로 교체 (interface 방식)
 	// => interface BoardMapper 를 통해서
 	//    BoardMapper.xml 의 SQL 구문 접근
+	
+	@Override
+	public List<BoardVO> joinList(BoardVO vo) {
+		return mapper.joinList(vo);
+	}
+	
+	@Override
+	public List<BoardVO> checkList(BoardVO vo) {
+		return mapper.checkList(vo);
+	}
+	
+	@Override
+	public int totalCriCount(Criteria cri) {	
+		return mapper.totalCriCount(cri);
+	}
+	
+	@Override
+	public List<BoardVO> criList(Criteria cri) {
+		return mapper.criList(cri);
+	}
 	
 	@Override
 	public PageVO<BoardVO> pageList(PageVO<BoardVO> pvo) {	

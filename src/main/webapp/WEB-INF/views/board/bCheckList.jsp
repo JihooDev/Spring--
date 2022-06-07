@@ -8,10 +8,21 @@
 <title>** Spring MVC2 BoardList **</title>
 </head>
 <body>
-<h2>** Spring MVC2 Board PageList **</h2>
+<h2>** Spring MVC2 BoardList **</h2>
 <c:if test="${not empty message}">
 	<h3>${message}</h3>
 </c:if>
+<div id="searchBar">
+	<form action="bchecklist" method="get">
+		<b>글쓴이 : </b>
+		<input type="checkbox" name="check" value="admin">관리자&nbsp; 
+		<input type="checkbox" name="check" value="apple">apple&nbsp; 
+		<input type="checkbox" name="check" value="banana">banana&nbsp; 
+		<input type="checkbox" name="check" value="wlgn829">wlgn829&nbsp;
+		<button>검색</button>
+		<button type="reset">취소</button> 
+	</form>
+</div>
 <table width=100%>
 	<tr bgcolor="yellow" height="30">
 		<th>Seq</th>
@@ -42,44 +53,6 @@
 		</tr>
 	</c:forEach>
 </table>
-<br><hr>
-<div align="center">
-	<!-- Paging 1. : 모든페이지 출력, 현재Page 강조 / 나머지 페이지는 링크 -->
-	<%-- <c:forEach var="i" begin="1" end="${totalPageNo}">
-		<c:if test="${i==currPage}">
-			<font size="5" color="orange">${i}</font>&nbsp;
-		</c:if>
-		<c:if test="${i != currPage}">
-			<a href="bpagelist?currPage=${i}">${i}</a>&nbsp;
-		</c:if>
-	</c:forEach> --%>
-	<c:choose>
-		<c:when test="${sPageNo > pageNocount}">
-			<a href="bpagelist?currPage=1">FF</a>&nbsp;&nbsp;
-			<a href="bpagelist?currPage=${sPageNo-1}">&lt;</a>&nbsp;&nbsp;&nbsp;
-		</c:when>
-		<c:otherwise>
-			<font color="gray">FF&nbsp;&nbsp;</font>
-		</c:otherwise>
-	</c:choose>
-	<c:forEach var="i" begin="${sPageNo}" end="${ePageNo}">
-		<c:if test="${i==currPage}">
-			<font size="5" color="orange">${i}</font>&nbsp;
-		</c:if>
-		<c:if test="${i != currPage}">
-			<a href="bpagelist?currPage=${i}">${i}</a>&nbsp;
-		</c:if>
-	</c:forEach>&nbsp;&nbsp;
-	<c:choose>
-		<c:when test="${ePageNo < totalPageNo}">
-			<a href="bpagelist?currPage=${ePageNo+1}">&gt;</a>
-			<a href="bpagelist?currPage=${totalPageNo}">LL</a>
-		</c:when>
-		<c:otherwise>
-			<font color="gray">&nbsp;&nbsp;LL</font>
-		</c:otherwise>
-	</c:choose>
-</div>
 <c:if test="${not empty LoginID }">
 &nbsp;&nbsp;<a href="binsertf">새글작성</a>
 </c:if>
